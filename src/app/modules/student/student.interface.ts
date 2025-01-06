@@ -1,12 +1,12 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model, connect, Model } from 'mongoose';
 
-export type UserName = {
+export type TUserName = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 };
 
-export type Gurdian = {
+export type TGurdian = {
   fatherName: string;
   fatherOccupation: string;
   fatherContactNo: string;
@@ -15,17 +15,18 @@ export type Gurdian = {
   motherContactNo: string;
 };
 
-export type LocalGurdian = {
+export type TLocalGurdian = {
   name: string;
   occupation: string;
   contactNo: string;
   address: string;
 };
 
-export type Student = {
+export type TStudent = {
   id: string;
-  name: UserName;
-  gender: 'male' | 'female';
+  password: string;
+  name: TUserName;
+  gender: 'male' | 'female' | 'others';
   datOfBirth?: string;
   email: string;
   contactNo: string;
@@ -33,8 +34,27 @@ export type Student = {
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
-  guardian: Gurdian;
-  localGurdian: LocalGurdian;
+  guardian: TGurdian;
+  localGurdian: TLocalGurdian;
   profileImage?: string;
   isActive: 'active' | 'blocked';
+  isDeleted: boolean;
 };
+
+// for creating instance
+// export type StudentMethods = {
+//   isUSerExist(id: string): Promise<TStudent | null>;
+// };
+
+// Create a new Model type that knows about IUserMethods...
+// export type StudentModel = Model<
+//   TStudent,
+//   Record<string, never>,
+//   StudentMethods
+// >;
+
+// for creating static
+
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
+}
