@@ -1,15 +1,23 @@
 import { Schema, model, connect } from 'mongoose';
 import validator from 'validator';
+// import {
+//   TLocalGurdian,
+//   TStudent,
+//   // StudentMethods,
+//   StudentModel,
+//   TUserName,
+//   TGurdian,
+// } from './student.interface';
+import bcrypt from 'bcrypt';
+import config from '../../config';
 import {
+  StudentModel,
+  TGurdian,
   TLocalGurdian,
   TStudent,
-  // StudentMethods,
-  StudentModel,
   TUserName,
-  TGurdian,
-} from './student/student.interface';
-import bcrypt from 'bcrypt';
-import config from '../config';
+} from './student.interface';
+// import config from '../config';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
